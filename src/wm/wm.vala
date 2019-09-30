@@ -129,6 +129,12 @@ public class MinimizeData {
     }
 }
 
+[CompactClass]
+class AnimationInfo {
+    public Clutter.Actor? actor_clone;
+    public Meta.Rectangle old_rect;
+}
+
 public class BudgieWM : Meta.Plugin
 {
     static Meta.PluginInfo info;
