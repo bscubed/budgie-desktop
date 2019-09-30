@@ -168,6 +168,10 @@ public class BudgieWM : Meta.Plugin
     Clutter.Actor? display_group;
     bool enabled_experimental_run_diag_as_menu = false;
 
+    /* For maximize/unmaximize animations */
+    Clutter.Actor? screen_group;
+    ulong current_window_resize;
+
     construct
     {
         info = Meta.PluginInfo() {
@@ -475,6 +479,9 @@ public class BudgieWM : Meta.Plugin
 
     public override void start()
     {
+        var screen = this.get_screen();
+        screen_group = Meta.Compositor.get_window_group_for_screen(screen);
+
         var display = this.get_display();
         display_group = Meta.Compositor.get_window_group_for_display(display);
         var stage = Meta.Compositor.get_stage_for_display(display);
@@ -539,6 +546,7 @@ public class BudgieWM : Meta.Plugin
         background_group = new Meta.BackgroundGroup();
         background_group.set_reactive(true);
         display_group.insert_child_below(background_group, null);
+        screen_group.insert_child_below(background_group, null);
         background_group.button_release_event.connect(on_background_click);
 
         var monitor_manager = Meta.MonitorManager.get();
@@ -547,6 +555,7 @@ public class BudgieWM : Meta.Plugin
 
         background_group.show();
         display_group.show();
+        screen_group.show();
         stage.show();
 
         keyboard = new KeyboardManager(this);
