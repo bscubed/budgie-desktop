@@ -819,7 +819,7 @@ public class BudgieWM : Meta.Plugin
     /* Maximize/unmaximize animations */
     public override void size_change(Meta.WindowActor actor, Meta.SizeChange which_change, Meta.Rectangle old_frame_rect, Meta.Rectangle old_buffer_rect)
     {
-        if (use_animations) {
+        if (!use_animations) {
             this.size_change_completed(actor);
             return;
         }
